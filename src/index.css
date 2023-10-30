@@ -2,6 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  background-color: #ffffff; /* Set your desired background color */
-}
