@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import AuthProvider, { AuthContext } from '../../providers/AuthProvider';
 
 const Login = () => {
 
     const captchaRef = useRef(null);
+
+    const { login } = AuthProvider(AuthContext);
+
 
     const [disabled, setDisabled] = useState(true);
     useEffect(() => {
@@ -17,6 +22,16 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+
+        login(email, password)
+            .then(result => {
+                form.reset();
+                const user = result.user;
+                Navigate('/', { replace: true });
+            })
+            .then(error => {
+                setError(error.message)
+            });
     };
 
     const handleValidateCaptcha = () => {
@@ -63,6 +78,7 @@ const Login = () => {
                                 <button onClick={handleValidateCaptcha} className="btn btn-xs btn-outline btn-info">Validate</button>
 
                             </div>
+                            <p>Dont Have an Acocunt? <Link to='/register'><span className='text-blue-600'>Register</span></Link></p>
                             <div className="form-control mt-6">
                                 <input disabled={disabled} className="btn btn-primary" type="submit" value={'Login'} />
 
