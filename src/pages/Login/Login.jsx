@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
 import { Helmet } from 'react-helmet-async';
@@ -7,9 +7,11 @@ import Swal from 'sweetalert2';
 
 const Login = () => {
 
-
     const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
+    const from = location.state?.from?.pathname || '/';
 
     const [disabled, setDisabled] = useState(true);
     useEffect(() => {
@@ -47,7 +49,7 @@ const Login = () => {
                     }
                 });
 
-                Navigate('/', { replace: true });
+                navigate(from, { replace: true });
             })
             .then(error => {
                 setError(error.message)
