@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 
 const FoodCard = ({ item }) => {
     const { image, name, recipe, price } = item;
-
+    const handleAddToCart = (item) => {
+        console.log(item);
+    };
     return (
         <div>
             <div className="card w-96 bg-base-100 shadow-xl">
@@ -13,7 +15,7 @@ const FoodCard = ({ item }) => {
                     <p>{recipe}</p>
                     <div className="card-actions justify-end">
                         <Link to={``}>
-                            <button className="btn btn-outline border-b-4 border-0 border-black bg-slate-500 text-white">Order Now</button>
+                            <button onClick={() => handleAddToCart(item)} className="btn btn-outline border-b-4 border-0 border-black bg-slate-500 text-white">Order Now</button>
                         </Link>                    </div>
                 </div>
             </div>
