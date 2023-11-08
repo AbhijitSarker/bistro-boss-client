@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form"
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm()
@@ -79,6 +80,7 @@ const Register = () => {
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
                                 </div>
+                                <p>Already Have an Acocunt? <Link to='/login'><span className='text-blue-600'>Login</span></Link></p>
 
                                 <div className="form-control mt-6">
                                     <input className="btn btn-primary" type="submit" value={'Register'} />
