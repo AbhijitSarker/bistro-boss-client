@@ -1,12 +1,16 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { FiMenu, FiShoppingCart, } from 'react-icons/fi';
-import { GiWallet } from "react-icons/gi";
-import { FaCalendarAlt, FaHome } from "react-icons/fa";
+import { GiForkKnifeSpoon, GiWallet } from "react-icons/gi";
+import { FaBook, FaCalendarAlt, FaHome, FaUsers } from "react-icons/fa";
 import useCart from '../hooks/useCart';
 
 const Dashboard = () => {
-    const [cart] = useCart()
+    const [cart] = useCart();
+
+    //todo: loade data from the server based on the DATA
+    const isAdmin = true;
+
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -20,10 +24,25 @@ const Dashboard = () => {
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 min-h-full  text-base-content">
                         {/* Sidebar content here */}
-                        <li><NavLink to='/dashboard/home'><FaHome />User Home</NavLink></li>
-                        <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
-                        <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
-                        <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
+
+                        {
+                            isAdmin ? <>
+                                <li><NavLink to='/dashboard/home'><FaHome />Admin Home</NavLink></li>
+                                <li><NavLink to='/dashboard/reservation'><GiForkKnifeSpoon />Add Items</NavLink></li>
+                                <li><NavLink to='/dashboard/items'><FiShoppingCart />Manage Items</NavLink></li>
+                                <li><NavLink to='/dashboard/bookings'><FaBook />Manage Bookings </NavLink></li>
+                                <li><NavLink to='/dashboard/allusers'><FaUsers />All Users </NavLink></li>
+                            </>
+                                : <>
+                                    <li><NavLink to='/dashboard/home'><FaHome />User Home</NavLink></li>
+                                    <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
+                                    <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
+                                    <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
+                                </>
+                        }
+
+
+
                         <div className="divider"></div>
 
                         <li><NavLink to='/'><FaHome />Home</NavLink></li>

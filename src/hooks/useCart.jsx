@@ -5,6 +5,7 @@ import { AuthContext } from '../providers/AuthProvider';
 const useCart = () => {
     const { user } = useContext(AuthContext);
 
+    //tan stack query
     const { refetch, data: cart = [] } = useQuery({
         queryKey: ['carts', user?.email],
         queryFn: async () => {
