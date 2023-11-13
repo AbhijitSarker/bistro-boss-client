@@ -1,14 +1,45 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import useCart from '../../../hooks/useCart';
+import { FaTrashAlt } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 const MyCart = () => {
-    const [cart] = useCart();
-    console.log(cart)
+    const [cart, refetch] = useCart();
+    //todo: how does reduce work
     const total = cart.reduce((sum, item) => item.price + sum, 0);
-    console.log(total)
+
+    const handleDelete = (item) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/carts/${item._id}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+
+            }
+        });
+    }
     return (
-        <div>
+        <div className='w-full'>
             <Helmet>
                 <title>My Cart | Bistro Boss</title>
                 <link rel="canonical" href="https://www.tacobell.com/" />
@@ -43,26 +74,18 @@ const MyCart = () => {
                                     {index + 1}
                                 </td>
                                 <td>
-                                    <div className="flex items-center space-x-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={item.image} alt="Avatar Tailwind CSS Component" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="font-bold"></div>
-                                            <div className="text-sm opacity-50">United States</div>
+                                    <div className="avatar">
+                                        <div className="mask mask-squircle w-12 h-12">
+                                            <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    Zemlak, Daniel and Leannon
-                                    <br />
-                                    <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                    {item.name}
                                 </td>
-                                <td>Purple</td>
+                                <td className='text-end'>${item.price}</td>
                                 <td>
-                                    <button className="btn btn-ghost btn-xs">details</button>
+                                    <button onClick={() => handleDelete(item)} className="btn btn-ghost text-white bg-red-600"><FaTrashAlt /></button>
                                 </td>
                             </tr>)
                         }

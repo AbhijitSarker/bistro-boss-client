@@ -4,6 +4,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Register = () => {
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
@@ -13,24 +14,35 @@ const Register = () => {
     const navigate = useNavigate()
 
     const onSubmit = (data) => {
-        console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log(loggedUser)
                 updateUserProfile(data.name, data.url)
                     .then(result => {
-                        console.log('profile updated');
-                        reset();
+                        //save user data 
+                        const saveUser = { name: data.name, email: data.email };
 
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "User Created successfully",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/')
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: { 'content-type': 'application/json' },
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User Created successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+                                }
+                            })
+
+
                     })
                     .then(error => {
                         console.log(error);
@@ -114,6 +126,7 @@ const Register = () => {
                                     <input className="btn btn-primary" type="submit" value={'Register'} />
                                 </div>
                             </form>
+                            <SocialLogin></SocialLogin>
                         </div>
                     </div>
                 </div>
