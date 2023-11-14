@@ -53,7 +53,7 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .then(error => {
-                setError(error.message)
+                console.log(error);
             });
     };
 

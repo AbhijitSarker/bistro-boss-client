@@ -4,12 +4,14 @@ import { FiMenu, FiShoppingCart, } from 'react-icons/fi';
 import { GiForkKnifeSpoon, GiWallet } from "react-icons/gi";
 import { FaBook, FaCalendarAlt, FaHome, FaUsers } from "react-icons/fa";
 import useCart from '../hooks/useCart';
+import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
     const [cart] = useCart();
 
     //todo: loade data from the server based on the DATA
-    const isAdmin = true;
+    // const isAdmin = true;
+    const isAdmin = useAdmin();
 
     return (
         <div>

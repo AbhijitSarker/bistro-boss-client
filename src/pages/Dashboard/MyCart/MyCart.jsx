@@ -9,6 +9,7 @@ const MyCart = () => {
     //todo: how does reduce work
     const total = cart.reduce((sum, item) => item.price + sum, 0);
 
+    console.log(cart)
     const handleDelete = (item) => {
         Swal.fire({
             title: "Are you sure?",
