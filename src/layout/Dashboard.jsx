@@ -11,8 +11,7 @@ const Dashboard = () => {
 
     //todo: loade data from the server based on the DATA
     // const isAdmin = true;
-    const isAdmin = useAdmin();
-
+    const [isAdmin] = useAdmin();
     return (
         <div>
             <div className="drawer lg:drawer-open">
@@ -30,7 +29,7 @@ const Dashboard = () => {
                         {
                             isAdmin ? <>
                                 <li><NavLink to='/dashboard/home'><FaHome />Admin Home</NavLink></li>
-                                <li><NavLink to='/dashboard/reservation'><GiForkKnifeSpoon />Add Items</NavLink></li>
+                                <li><NavLink to='/dashboard/addItem'><GiForkKnifeSpoon />Add An Items</NavLink></li>
                                 <li><NavLink to='/dashboard/items'><FiShoppingCart />Manage Items</NavLink></li>
                                 <li><NavLink to='/dashboard/bookings'><FaBook />Manage Bookings </NavLink></li>
                                 <li><NavLink to='/dashboard/allusers'><FaUsers />All Users </NavLink></li>
