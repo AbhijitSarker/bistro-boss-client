@@ -51,7 +51,7 @@ const NavBar = () => {
                         </ul>
                     </div>
                     <Link to='/'>
-                        <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
+                        <span className="btn btn-ghost normal-case text-xl">Bistro Boss</span>
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
