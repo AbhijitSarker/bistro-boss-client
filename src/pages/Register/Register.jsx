@@ -50,23 +50,13 @@ const Register = () => {
             })
     }
 
-
-
-    // const handleSubmit = event => {
-    //     event.preventDefault();
-    //     const form = event.target;
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-    //     console.log(email, password);
-    // };
-
     return (
         <>
             <Helmet>
                 <title>Bistro Boss | Register</title>
             </Helmet>
             <div>
-                <div className="hero min-h-screen bg-base-200">
+                <div className="hero min-h-screen">
                     <div className="hero-content flex-col md:flex-row-reverse">
                         <div className="text-center md:w-1/2 lg:text-left">
                             <h1 className="text-5xl font-bold">Register!</h1>

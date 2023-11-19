@@ -71,7 +71,7 @@ const Login = () => {
             <Helmet>
                 <title>Bistro Boss | Register</title>
             </Helmet>
-            <div className="hero min-h-screen bg-base-200">
+            <div className="hero min-h-screen ">
                 <div className="hero-content flex-col md:flex-row-reverse">
                     <div className="text-center md:w-1/2 lg:text-left">
                         <h1 className="text-5xl font-bold">Login now!</h1>

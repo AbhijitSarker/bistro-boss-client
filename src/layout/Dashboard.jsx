@@ -28,14 +28,14 @@ const Dashboard = () => {
 
                     {
                         isAdmin ? <>
-                            <li><NavLink to='/dashboard/home'><FaHome />Admin Home</NavLink></li>
+                            <li><NavLink to='/dashboard/adminhome'><FaHome />Admin Home</NavLink></li>
                             <li><NavLink to='/dashboard/addItem'><GiForkKnifeSpoon />Add An Items</NavLink></li>
                             <li><NavLink to='/dashboard/manageItems'><FiShoppingCart />Manage Items</NavLink></li>
                             <li><NavLink to='/dashboard/bookings'><FaBook />Manage Bookings </NavLink></li>
                             <li><NavLink to='/dashboard/allusers'><FaUsers />All Users </NavLink></li>
                         </>
                             : <>
-                                <li><NavLink to='/dashboard/home'><FaHome />User Home</NavLink></li>
+                                <li><NavLink to='/dashboard/userhome'><FaHome />User Home</NavLink></li>
                                 <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
                                 <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
                                 <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
