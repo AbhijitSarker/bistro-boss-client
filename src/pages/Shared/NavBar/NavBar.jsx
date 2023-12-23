@@ -1,71 +1,100 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../providers/AuthProvider';
-import { FiShoppingCart } from 'react-icons/fi';
 import useCart from '../../../hooks/useCart';
 import useAdmin from '../../../hooks/useAdmin';
+import Swal from "sweetalert2";
+import { FaBarsStaggered } from "react-icons/fa6";
+import { GiCrossedBones } from "react-icons/gi";
+import useAuth from '../../../hooks/useAuth';
 
 const NavBar = () => {
-    const { user, logout } = useContext(AuthContext);
     const [cart] = useCart();
     const [isAdmin] = useAdmin();
+    const [open, setOpen] = useState(false);
+
+    const { logout, user } = useAuth();
 
     const handleLogout = () => {
         logout();
-    }
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Logged out successfully",
+            showConfirmButton: false,
+            timer: 1000
+        });
+    };
 
-    const navOptions = <>
-        <li><Link to='/'>Home </Link></li>
-        <li><Link to='/menu'>Our Menu </Link></li>
-        <li><Link to='/order/salad'>Order Food</Link></li>
-        <li><Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'}>Dashboard</Link></li>
-        <li>
-            <Link to='/dashboard/mycart'>
-                <button className="btn">
-                    <FiShoppingCart />
-                    <div className="badge badge-secondary">+{cart?.length || 0}</div>
-                </button>
-            </Link>
-        </li>
-
-
-        {
-            user ?
-                <>
-
-                    <button onClick={handleLogout} className="btn btn-active btn-ghost">Logout</button>
-                </>
-                : <>
-                    <li><Link to='/login'>Login</Link></li>
-                </>
-        }
-    </>
     return (
-        <div>
-            <div className="navbar fixed z-10 max-w-screen-xl text-white mx-auto bg-base-100 opacity-70">
-                <div className="navbar-start">
-                    <div className="dropdown">
-                        <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                        </label>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            {navOptions}
-                        </ul>
-                    </div>
-                    <Link to='/'>
-                        <span className="btn btn-ghost normal-case text-xl">Bistro Boss</span>
-                    </Link>
+
+        <nav className="bg-transparent z-10 relative w-full  h-16 md:h-20 flex justify-center">
+            <div className='flex justify-between items-center font-serif container mx-auto'>
+                <div className='flex justify-center items-center font-bold text-[#DCCA87] text-5xl'>
+                    {/* <img className='h-10' src={logo} alt="" /> */}
+                    <h1>Res2Ran</h1>
                 </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
-                        {navOptions}
-                    </ul>
-                </div>
-                <div className="navbar-end">
-                    <a className="btn">Button</a>
+                {/*for small device */}
+                <ul className={`absolute w-full h-screen flex flex-col gap-10 justify-center items-center bg-[#0C0B08] text-[#DCCA87] transform duration-500 ease-in-out ${open ? 'left-0 top-0' : '-top-[2000px]  left-0'} `}>
+                    <Link to='/' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Home</Link>
+                    <Link to='/menu' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Menu</Link>
+                    <Link to='/order/salad' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Order Food</Link>
+                    <Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-3xl font-bold  text-[#DCCA87] rounded-md p-1 hover:text-white'>Dashboard</Link>
+                    {
+                        user ?
+                            <>
+                                <button onClick={handleLogout} className="text-3xl font-bold  text-[#DCCA87] rounded-md p-1 hover:text-white underline">Logout</button>
+                            </>
+                            : <>
+                                <Link to={'/login'}><button className=' md:flex hover:text-[#DCCA87] text-3xl font-bold  w-36 h-12 items-center justify-center rounded-lg text-white transition ease-in-out duration-200'>Login / Register</button></Link>
+                            </>
+                    }
+                </ul>
+
+                {/* for medium and large device */}
+                <ul className='md:flex hidden text-white space-x-5'>
+                    <Link to='/' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Homes</Link>
+                    <Link to='/menu' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Menu</Link>
+                    <Link to='/order/salad' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Order Food</Link>
+                    <Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Dashboard</Link>
+
+                </ul>
+
+                {
+                    user ?
+                        <div className='flex'>
+                            <Link className=' md:mr-8' to='/dashboard/mycart'>
+                                <div className="relative py-2">
+                                    <div className="t-0 absolute left-3">
+                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-[#DCCA87] p-3 text-sm font-semibold text-black">{cart?.length || 0}</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="file: mt-4 h-6 w-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                    </svg>
+                                </div>
+                            </Link>
+                            <button onClick={handleLogout} className="hidden md:flex hover:text-[#DCCA87] hover:underline font-serif w-36 h-12 items-center justify-center rounded-lg font-bold text-xl text-white transition ease-in-out duration-200">Logout</button>
+                        </div>
+                        : <div className='flex'>
+                            <Link className=' md:mr-8' to='/dashboard/mycart'>
+                                <div className="relative py-2">
+                                    <div className="t-0 absolute left-3">
+                                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-[#DCCA87] p-3 text-sm font-semibold text-black">{cart?.length || 0}</p>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="file: mt-4 h-6 w-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                    </svg>
+                                </div>
+                            </Link>
+                            <Link to={'/login'}><button className='hidden md:flex hover:underline hover:text-[#DCCA87] font-serif w-36 h-12 items-center justify-center rounded-lg font-bold text-xl text-white transition ease-in-out duration-200'>Login / Register</button></Link>
+                        </div>
+                }
+                <div className='md:hidden z-20' onClick={() => setOpen(!open)}>
+                    {
+                        open ? <GiCrossedBones className='text-4xl text-[#DCCA87]' /> : <FaBarsStaggered className='text-4xl text-[#DCCA87]' />
+                    }
                 </div>
             </div>
-        </div>
+        </nav>
     );
 };
 
