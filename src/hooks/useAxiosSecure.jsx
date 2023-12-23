@@ -6,7 +6,7 @@ import useAuth from './useAuth';
 // import useAuth from './useAuth';
 
 const axiosSecure = axios.create({
-    baseURL: 'https://bistro-boss-server-ten-gamma.vercel.app',
+    baseURL: 'http://localhost:5000',
 });
 
 const useAxiosSecure = () => {
