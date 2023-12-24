@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
+import Button from "../Button/Button";
 
 const FoodCard = ({ item }) => {
     const { image, name, recipe, price, _id } = item;
@@ -51,20 +52,21 @@ const FoodCard = ({ item }) => {
         }
     };
     return (
-        <div>
-            <div className="card w-96 shadow-xl">
-                <figure><img src={image} alt="Shoes" /></figure>
-                <p className="bg-slate-900 text-white absolute right-4 top-4 px-4 py-2 rounded-lg">${price}</p>
-                <div className="card-body flex flex-col items-start">
-                    <h2 className="card-title text-black">{name}</h2>
-                    <p className="text-gray-800">{recipe}</p>
-                    <div className="card-actions justify-end">
-                        <Link to={``}>
-                            <button onClick={() => handleAddToCart(item)} className="btn btn-outline border-b-4 border-0 border-black bg-slate-500 text-white">Order Now</button>
-                        </Link>                    </div>
+
+        <div className="card glass hover:transform  hover:translate-y-2 ease-in-out duration-300">
+            <figure><img className="w-full" src={image} alt="Shoes" /></figure>
+            <p className="bg-[#DCCA87] text-black font-medium font-serif absolute right-4 top-4 px-4 py-2 rounded-lg">${price}</p>
+            <div className="card-body flex flex-col items-start">
+                <h2 className="card-title text-white">{name}</h2>
+                <p className="text-gray-300">{recipe}</p>
+                <div className="card-actions justify-end">
+                    <Link to={``}>
+                        <Button onClick={() => handleAddToCart(item)} title={'Order Now'} ></Button>
+                    </Link>
                 </div>
             </div>
         </div>
+
     );
 };
 
