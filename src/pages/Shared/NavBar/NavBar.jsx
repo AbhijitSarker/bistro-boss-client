@@ -52,7 +52,7 @@ const NavBar = () => {
 
                 {/* for medium and large device */}
                 <ul className='md:flex hidden text-white space-x-5'>
-                    <Link to='/' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Homes</Link>
+                    <Link to='/' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Home</Link>
                     <Link to='/menu' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Menu</Link>
                     <Link to='/order/salad' className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Order Food</Link>
                     <Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-lg font-lg hover:text-[#DCCA87] rounded-md px-1'>Dashboard</Link>
