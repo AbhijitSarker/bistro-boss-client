@@ -55,7 +55,7 @@ const FoodCard = ({ item }) => {
 
         <div className="card glass hover:transform  hover:translate-y-2 ease-in-out duration-300">
             <figure><img className="w-full" src={image} alt="Shoes" /></figure>
-            <p className="bg-[#DCCA87] text-black font-medium font-serif absolute right-4 top-4 px-4 py-2 rounded-lg">${price}</p>
+            <p className="bg-primary text-black font-medium font-serif absolute right-4 top-4 px-4 py-2 rounded-lg">${price}</p>
             <div className="card-body flex flex-col items-start">
                 <h2 className="card-title text-white">{name}</h2>
                 <p className="text-gray-300">{recipe}</p>

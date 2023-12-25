@@ -118,7 +118,7 @@ const AddItem = () => {
                     <input {...register("image", { required: true })} type="file" className="file-input file-input-bordered w-full " />
                 </div>
 
-                <input className="bg-[#DCCA87] px-4 py-2 rounded-md text-black font-semibold" type="submit" value={isLoading ? 'Adding...' : 'Add Item'}
+                <input className="bg-primary px-4 py-2 rounded-md text-black font-semibold" type="submit" value={isLoading ? 'Adding...' : 'Add Item'}
                     disabled={isLoading} />
             </form>
         </div>

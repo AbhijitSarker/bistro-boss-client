@@ -3,11 +3,38 @@ import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useState } from "react";
+import Button from "../../../components/Button/Button";
 
 const ManageItems = () => {
     const [menu, , refetch] = useMenu();
 
     const [axiosSecure] = useAxiosSecure();
+
+    // Pagination state
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Calculate indexes for pagination and display items for the current page
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = menu.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(menu.length / itemsPerPage);     // Calculate the total number of pages based on the cart length and items per page
+
+    // Functions to navigate to the next 
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Functions to navigate to the previous pages
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     const handleDelete = item => {
         Swal.fire({
@@ -36,25 +63,25 @@ const ManageItems = () => {
     };
 
     return (
-        <div className="w-full">
-            <SectionTitle heading={'Manage  Items'} subHeading={'Hurry Up'}></SectionTitle>
+        <div className="w-full text-white">
+            <SectionTitle heading={'Manage Items'} subHeading={'Hurry Up'}></SectionTitle>
 
-            <div className="overflow-x-auto">
-                <table className="table">
+            <div className="overflow-x-auto rounded-lg">
+                <table className="table ">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-primary text-black text-lg">
                             <th>#</th>
                             <th>Name</th>
-                            <th>Price</th>
                             <th>Category</th>
+                            <th className="text-right">Price</th>
                             <th>Update</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            menu.map((item, index) => <tr key={item._id}>
+                            currentItems.map((item, index) => <tr key={item._id}>
                                 <th>
                                     {index + 1}
                                 </th>
@@ -76,8 +103,7 @@ const ManageItems = () => {
                                     <button className="btn btn-ghost btn-xs">Update</button>
                                 </td>
                                 <td>
-                                    <button onClick={() => handleDelete(item)} className="btn btn-ghost text-white bg-red-600"><FaTrashAlt /></button>
-                                </td>
+                                    <button onClick={() => handleDelete(item)} className="p-3 rounded-lg text-lg text-white bg-red-600"><FaTrashAlt /></button>                                </td>
                             </tr>)
                         }
 
@@ -87,7 +113,12 @@ const ManageItems = () => {
 
                 </table>
             </div>
-
+            {/* pagination buttons */}
+            <div className=' flex justify-center items-center gap-4 mt-4'>
+                <Button onClick={prevPage} disabled={currentPage === 1} title={'Prev'}></Button>
+                <span>Page {currentPage} of {totalPages}</span>
+                <Button onClick={nextPage} disabled={currentPage === totalPages} title={'Next'}></Button>
+            </div>
         </div>
     );
 };
