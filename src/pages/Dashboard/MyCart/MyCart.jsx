@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useCart from '../../../hooks/useCart';
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import Button from '../../../components/Button/Button';
 
 const MyCart = () => {
-    const [cart, refetch] = useCart();
-    //todo: how does reduce work
-    const total = cart.reduce((sum, item) => item.price + sum, 0);
+    const [cart, refetch] = useCart();     // Fetch cart items using the useCart custom hook
 
+    const total = cart.reduce((sum, item) => item.price + sum, 0);     // Calculate the total price of items in the cart using reduce
+
+    // Pagination state
+
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Calculate indexes for pagination and display items for the current page
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = cart.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(cart.length / itemsPerPage);     // Calculate the total number of pages based on the cart length and items per page
+
+    // Functions to navigate to the next 
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Functions to navigate to the previous pages
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // Function to handle item deletion from the cart
     const handleDelete = (item) => {
+        // Display a confirmation dialog before deleting the item
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -21,13 +51,14 @@ const MyCart = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                // Make a DELETE request to remove the item from the cart
                 fetch(`http://localhost:5000/carts/${item._id}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
                     .then(data => {
                         if (data.deletedCount > 0) {
-                            refetch();
+                            refetch(); // Refetch the cart items and display a success message
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
@@ -52,6 +83,7 @@ const MyCart = () => {
             </div>
 
 
+
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -66,10 +98,10 @@ const MyCart = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
 
+                    <tbody>
                         {
-                            cart.map((item, index) => <tr key={item._id}>
+                            currentItems.map((item, index) => <tr key={item._id}>
                                 <td>
                                     {index + 1}
                                 </td>
@@ -89,13 +121,16 @@ const MyCart = () => {
                                 </td>
                             </tr>)
                         }
-
-
-
-
                     </tbody>
 
                 </table>
+            </div>
+
+            {/* pagination buttons */}
+            <div className=' flex justify-center items-center gap-4'>
+                <Button onClick={prevPage} disabled={currentPage === 1} title={'Previous'}></Button>
+                <span>Page {currentPage} of {totalPages}</span>
+                <Button onClick={nextPage} disabled={currentPage === totalPages} title={'Next'}></Button>
             </div>
         </div>
     );
