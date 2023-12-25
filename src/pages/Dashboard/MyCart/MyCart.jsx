@@ -5,6 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button/Button';
+import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 
 const MyCart = () => {
     const [cart, refetch] = useCart();     // Fetch cart items using the useCart custom hook
@@ -12,7 +13,6 @@ const MyCart = () => {
     const total = cart.reduce((sum, item) => item.price + sum, 0);     // Calculate the total price of items in the cart using reduce
 
     // Pagination state
-
     const itemsPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -31,7 +31,6 @@ const MyCart = () => {
     };
 
     // Functions to navigate to the previous pages
-
     const prevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -76,59 +75,49 @@ const MyCart = () => {
                 <title>My Cart | Bistro Boss</title>
                 <link rel="canonical" href="https://www.tacobell.com/" />
             </Helmet>
-            <div className='uppercase font-bold flex justify-evenly h-10 items-center'>
-                <h3 className='text-3xl'>Total Items: {cart.length}</h3>
-                <h3 className='text-3xl'>Total ptice: {total}</h3>
-                <Link to='/dashboard/payment'><button className="btn btn-warning btn-small">Pay</button></Link>
+            <SectionTitle heading='My Orders ' subHeading='Confirm Order'></SectionTitle>
+
+            <div className='font-bold flex justify-evenly mb-2 items-center'>
+                <div className='flex flex-col md:flex-row justify-between md:gap-5'>
+                    <h3 className='text-lg'>Total Items: {cart.length}</h3>
+                    <h3 className='text-lg'>Total Price: {total}</h3>
+                </div>
+                <Link to='/dashboard/payment'><button className="bg-green-500 text-black py-2 px-4 rounded-md">Pay</button></Link>
             </div>
 
+            <div className="flex flex-col rounded-lg">
+                <div className="flex-grow overflow-auto rounded-lg">
+                    <table className="relative w-full rounded-lg">
+                        <thead>
+                            <tr className='bg-[#DCCA87] text-black'>
+                                <th className="sticky top-0 px-6 py-3">#</th>
+                                <th className="sticky top-0 px-6 py-3">Food</th>
+                                <th className="sticky top-0 px-6 py-3">Item Name</th>
+                                <th className="sticky top-0 px-6 py-3">Price</th>
+                                <th className="sticky top-0 px-6 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y ">
+                            {
+                                currentItems.map((item, index) => <tr className='text-center text-white hover:bg-gray-800 ' key={item._id}>
 
+                                    <td className="px-6 py-4">{index + 1}</td>
+                                    <td className="px-6 py-4"><img className='w-20 md:w-16 rounded-xl' src={item.image} alt="Avatar Tailwind CSS Component" /></td>
+                                    <td className="px-6 py-4">{item.name}</td>
+                                    <td className="px-6 py-4">${item.price}</td>
+                                    <td className="px-6 py-4"><button onClick={() => handleDelete(item)} className="p-3 rounded-lg text-lg text-white bg-red-600"><FaTrashAlt /></button></td>
+                                </tr>)
+                            }
 
-            <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th>
-                                #
-                            </th>
-                            <th>Food</th>
-                            <th>Item Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                        </tbody>
 
-                    <tbody>
-                        {
-                            currentItems.map((item, index) => <tr key={item._id}>
-                                <td>
-                                    {index + 1}
-                                </td>
-                                <td>
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-12 h-12">
-                                            <img src={item.image} alt="Avatar Tailwind CSS Component" />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    {item.name}
-                                </td>
-                                <td className='text-end'>${item.price}</td>
-                                <td>
-                                    <button onClick={() => handleDelete(item)} className="btn btn-ghost text-white bg-red-600"><FaTrashAlt /></button>
-                                </td>
-                            </tr>)
-                        }
-                    </tbody>
-
-                </table>
+                    </table>
+                </div>
             </div>
 
             {/* pagination buttons */}
-            <div className=' flex justify-center items-center gap-4'>
-                <Button onClick={prevPage} disabled={currentPage === 1} title={'Previous'}></Button>
+            <div className=' flex justify-center items-center gap-4 mt-4'>
+                <Button onClick={prevPage} disabled={currentPage === 1} title={'Prev'}></Button>
                 <span>Page {currentPage} of {totalPages}</span>
                 <Button onClick={nextPage} disabled={currentPage === totalPages} title={'Next'}></Button>
             </div>

@@ -12,7 +12,7 @@ const Banner = () => {
     return (
         <Carousel>
             <div>
-                <img src={img1} />
+                <img src={img4} />
                 <p className="legend">Legend 1</p>
             </div>
             <div>
@@ -24,7 +24,7 @@ const Banner = () => {
                 <p className="legend">Legend 3</p>
             </div>
             <div>
-                <img src={img4} />
+                <img src={img1} />
                 <p className="legend">Legend 1</p>
             </div>
             <div>
