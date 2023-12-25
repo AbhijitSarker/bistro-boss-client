@@ -1,61 +1,95 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { FiMenu, FiShoppingCart, } from 'react-icons/fi';
-import { GiForkKnifeSpoon, GiWallet } from "react-icons/gi";
-import { FaBook, FaCalendarAlt, FaHome, FaUsers } from "react-icons/fa";
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import useCart from '../hooks/useCart';
 import useAdmin from '../hooks/useAdmin';
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import { FiMenu, FiShoppingCart, } from 'react-icons/fi';
+import { GiCrossedBones, GiForkKnifeSpoon, GiWallet } from "react-icons/gi";
+import { FaBook, FaCalendarAlt, FaHome, FaTable, FaUsers } from "react-icons/fa";
+import { FaBarsStaggered } from 'react-icons/fa6';
 
 const Dashboard = () => {
-    const [cart] = useCart();
+    const [cart] = useCart(); // Fetch user's cart
+    const [isAdmin] = useAdmin(); // Check if user is an admin
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for toggling the sidebar
 
-    //todo: loade data from the server based on the DATA
-    // const isAdmin = true;
-    const [isAdmin] = useAdmin();
+    // Function to toggle the sidebar visibility
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
     return (
+        <div>
 
-        <div className="drawer lg:drawer-open">
-            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content ">
-                {/* Page content here */}
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
-                <Outlet></Outlet>
-            </div>
-            <div className="drawer-side bg-[#d1a054]">
-                <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-80 min-h-full  text-base-content">
-                    {/* Sidebar content here */}
+            <div className="flex flex-col lg:flex-row h-screen">
+                {/* Helmet for setting meta tags */}
+                <Helmet>
+                    <title>Dashboard | Your App Name</title>
+                </Helmet>
 
-                    {
-                        isAdmin ? <>
-                            <li><NavLink to='/dashboard/adminhome'><FaHome />Admin Home</NavLink></li>
-                            <li><NavLink to='/dashboard/addItem'><GiForkKnifeSpoon />Add An Items</NavLink></li>
-                            <li><NavLink to='/dashboard/manageItems'><FiShoppingCart />Manage Items</NavLink></li>
-                            <li><NavLink to='/dashboard/bookings'><FaBook />Manage Bookings </NavLink></li>
-                            <li><NavLink to='/dashboard/allusers'><FaUsers />All Users </NavLink></li>
-                        </>
-                            : <>
-                                <li><NavLink to='/dashboard/userhome'><FaHome />User Home</NavLink></li>
-                                <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
-                                <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
-                                <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
+                {/* Mobile Menu Icon */}
+                <div className="lg:hidden flex justify-between items-center">
+                    <Link to={'/'}>
+                        <h1 className='text-5xl font-bold text-[#DCCA87]'>Res2Ran</h1>
+                    </Link>
+                    <button
+                        onClick={toggleSidebar}
+                        className="text-gray-200 p-3 focus:outline-none"
+                    >
+
+                        {isSidebarOpen ? (
+                            <GiCrossedBones className='text-4xl text-[#DCCA87]' />
+                        ) : (
+                            <FaBarsStaggered className='text-4xl text-[#DCCA87]' />
+                        )}
+
+                    </button>
+                </div>
+
+                {/* Sidebar */}
+                <aside className={`bg-[#DCCA87] text-black w-full lg:w-80 h-screen ${isSidebarOpen ? 'block' : 'hidden'} lg:block lg:min-h-screen p-3 md:p-6`} >
+                    {/* Sidebar content */}
+                    <h1 className="text-black text-7xl font-bold">Res2Ran</h1>
+                    {/* Sidebar links/menu */}
+                    <ul className="p-4 min-h-full">
+                        {
+                            isAdmin ? <>
+
+                                <Link to='/dashboard/adminhome'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaHome /> <p>Admin Home</p> </div>  </Link>
+                                <Link to='/dashboard/addItem'>     <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <GiForkKnifeSpoon /> <p>Add An Items</p> </div>  </Link>
+                                <Link to='/dashboard/manageItems'> <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaBook /> <p>Manage Items</p> </div>  </Link>
+                                <Link to='/dashboard/mycart'>      <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FiShoppingCart /> <p>My Cart</p> <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span> </div>  </Link>
+                                <Link to='/dashboard/allusers'>    <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaUsers /> <p>All Users</p> </div>  </Link>
                             </>
-                    }
+                                : <>
+                                    <li><NavLink to='/dashboard/userhome'><FaHome />User Home</NavLink></li>
+                                    <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
+                                    <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
+                                    <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
+
+                                    <Link to='/dashboard/userhome'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaHome /> <p>User Home</p> </div>  </Link>
+                                    <Link to='/dashboard/mycart'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FiShoppingCart /> <p>Admin Home</p> <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span> </div>  </Link>
+                                    <Link to='/dashboard/reservation'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaCalendarAlt /> <p>Reservation</p> </div>  </Link>
+                                    <Link to='/dashboard/history'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <GiWallet /> <p>Payment History</p> </div>  </Link>
+                                </>
+                        }
+
+                        <div className="divider "></div>
 
 
+                        <Link to='/'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaHome /> <p>Home</p> </div>  </Link>
+                        <Link to='/menu'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FiMenu /> <p>Menu</p> </div>  </Link>
+                        <Link to='/order/salad'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaTable /> <p>Order Food</p> </div>  </Link>
 
-                    <div className="divider"></div>
+                    </ul>
+                </aside>
 
-                    <li><NavLink to='/'><FaHome />Home</NavLink></li>
-                    <li><NavLink to='/menu'><FiMenu />Menu</NavLink></li>
-                    <li><NavLink to='/order/salad'>Order Food</NavLink></li>
-
-
-                </ul>
-
+                {/* Main content area */}
+                <main className="flex-1 p-6 lg:p-10">
+                    {/* Main content */}
+                    <Outlet></Outlet>
+                </main>
             </div>
         </div>
-
     );
 };
 

@@ -30,8 +30,7 @@ const NavBar = () => {
         <nav className="bg-transparent z-10 relative w-full  h-16 md:h-20 flex justify-center">
             <div className='flex justify-between items-center font-serif container mx-auto'>
                 <div className='flex justify-center items-center font-bold text-[#DCCA87] text-5xl'>
-                    {/* <img className='h-10' src={logo} alt="" /> */}
-                    <h1>Res2Ran</h1>
+                    <Link><h1>Res2Ran</h1></Link>
                 </div>
                 {/*for small device */}
                 <ul className={`absolute w-full h-screen flex flex-col gap-10 justify-center items-center bg-[#0C0B08] text-[#DCCA87] transform duration-500 ease-in-out ${open ? 'left-0 top-0' : '-top-[2000px]  left-0'} `}>
