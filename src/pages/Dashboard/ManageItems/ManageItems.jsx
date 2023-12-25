@@ -7,9 +7,9 @@ import { useState } from "react";
 import Button from "../../../components/Button/Button";
 
 const ManageItems = () => {
-    const [menu, , refetch] = useMenu();
+    const [menu, , refetch] = useMenu();     // Fetching menu items using custom hook
 
-    const [axiosSecure] = useAxiosSecure();
+    const [axiosSecure] = useAxiosSecure(); // Axios instance for secure requests
 
     // Pagination state
     const itemsPerPage = 5;
@@ -36,7 +36,9 @@ const ManageItems = () => {
         }
     };
 
+    // Function to handle item deletion
     const handleDelete = item => {
+        // Display a confirmation dialog before deleting the item
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -47,10 +49,11 @@ const ManageItems = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                // Delete item via secure Axios request
                 axiosSecure.delete(`/menu/${item._id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
-                            refetch();
+                            refetch(); // Refresh menu items after deletion
                             Swal.fire(
                                 'Deleted!',
                                 'Your Item has been deleted.',
