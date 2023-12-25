@@ -77,13 +77,13 @@ const MyCart = () => {
             </Helmet>
             <SectionTitle heading='My Orders ' subHeading='Confirm Order'></SectionTitle>
 
-            {/* <div className='font-bold flex justify-evenly mb-2 items-center'>
+            <div className='font-bold flex justify-evenly mb-2 items-center'>
                 <div className='flex flex-col md:flex-row justify-between md:gap-5'>
                     <h3 className='text-lg'>Total Items: {cart.length}</h3>
                     <h3 className='text-lg'>Total Price: {total}</h3>
                 </div>
                 <Link to='/dashboard/payment'><button className="bg-green-500 text-black py-2 px-4 rounded-md">Pay</button></Link>
-            </div> */}
+            </div>
 
             <div className="flex flex-col">
                 <div className="flex-grow overflow-auto rounded-lg">
