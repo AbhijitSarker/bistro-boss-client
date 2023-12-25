@@ -28,23 +28,23 @@ const Dashboard = () => {
             {/* Mobile Menu Icon */}
             <div className="lg:hidden flex justify-between items-center">
                 <Link to={'/'}>
-                    <h1 className='text-5xl font-bold text-[#DCCA87]'>Res2Ran</h1>
+                    <h1 className='text-5xl font-bold text-primary'>Res2Ran</h1>
                 </Link>
                 <button
                     onClick={toggleSidebar}
                     className="text-gray-200 p-3 focus:outline-none"
                 >
                     {isSidebarOpen ? (
-                        <GiCrossedBones className='text-4xl text-[#DCCA87]' />
+                        <GiCrossedBones className='text-4xl text-primary' />
                     ) : (
-                        <FaBarsStaggered className='text-4xl text-[#DCCA87]' />
+                        <FaBarsStaggered className='text-4xl text-primary' />
                     )}
 
                 </button>
             </div>
 
             {/* Sidebar */}
-            <aside className={`bg-[#DCCA87] text-black w-full lg:w-80 h-screen ${isSidebarOpen ? 'block' : 'hidden'} lg:block lg:min-h-screen p-3 md:p-6`} >
+            <aside className={`bg-primary text-black w-full lg:w-80 h-screen ${isSidebarOpen ? 'block' : 'hidden'} lg:block lg:min-h-screen p-3 md:p-6`} >
                 {/* Sidebar content */}
                 <h1 className="text-black text-7xl font-bold">Res2Ran</h1>
                 {/* Sidebar links/menu */}

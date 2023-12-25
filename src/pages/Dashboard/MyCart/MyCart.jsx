@@ -77,35 +77,44 @@ const MyCart = () => {
             </Helmet>
             <SectionTitle heading='My Orders ' subHeading='Confirm Order'></SectionTitle>
 
-            <div className='font-bold flex justify-evenly mb-2 items-center'>
+            {/* <div className='font-bold flex justify-evenly mb-2 items-center'>
                 <div className='flex flex-col md:flex-row justify-between md:gap-5'>
                     <h3 className='text-lg'>Total Items: {cart.length}</h3>
                     <h3 className='text-lg'>Total Price: {total}</h3>
                 </div>
                 <Link to='/dashboard/payment'><button className="bg-green-500 text-black py-2 px-4 rounded-md">Pay</button></Link>
-            </div>
+            </div> */}
 
-            <div className="flex flex-col rounded-lg">
+            <div className="flex flex-col">
                 <div className="flex-grow overflow-auto rounded-lg">
-                    <table className="relative w-full rounded-lg">
+                    <table className="table w-full rounded-lg">
                         <thead>
-                            <tr className='bg-[#DCCA87] text-black'>
-                                <th className="sticky top-0 px-6 py-3">#</th>
-                                <th className="sticky top-0 px-6 py-3">Food</th>
-                                <th className="sticky top-0 px-6 py-3">Item Name</th>
-                                <th className="sticky top-0 px-6 py-3">Price</th>
-                                <th className="sticky top-0 px-6 py-3">Action</th>
+                            <tr className='bg-primary text-black text-lg'>
+                                <th>#</th>
+                                <th>Food Item Name</th>
+                                <th className="text-right">Price</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y ">
+                        <tbody >
                             {
                                 currentItems.map((item, index) => <tr className='text-center text-white hover:bg-gray-800 ' key={item._id}>
 
-                                    <td className="px-6 py-4">{index + 1}</td>
-                                    <td className="px-6 py-4"><img className='w-20 md:w-16 rounded-xl' src={item.image} alt="Avatar Tailwind CSS Component" /></td>
-                                    <td className="px-6 py-4">{item.name}</td>
-                                    <td className="px-6 py-4">${item.price}</td>
-                                    <td className="px-6 py-4"><button onClick={() => handleDelete(item)} className="p-3 rounded-lg text-lg text-white bg-red-600"><FaTrashAlt /></button></td>
+                                    <td >{index + 1}</td>
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle w-12 h-12">
+                                                    <img src={item.image} alt="Avatar Tailwind CSS Component" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold">{item.name}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="text-right">${item.price}</td>
+                                    <td ><button onClick={() => handleDelete(item)} className="p-3 rounded-lg text-lg text-white bg-red-600"><FaTrashAlt /></button></td>
                                 </tr>)
                             }
 
