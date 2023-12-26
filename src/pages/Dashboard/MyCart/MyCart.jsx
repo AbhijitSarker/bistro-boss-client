@@ -90,7 +90,6 @@ const MyCart = () => {
                     <table className="table w-full rounded-lg">
                         <thead>
                             <tr className='bg-primary text-black text-lg'>
-                                <th>#</th>
                                 <th>Food Item Name</th>
                                 <th className="text-right">Price</th>
                                 <th>Action</th>
@@ -100,7 +99,6 @@ const MyCart = () => {
                             {
                                 currentItems.map((item, index) => <tr className='text-center text-white hover:bg-gray-800 ' key={item._id}>
 
-                                    <td >{index + 1}</td>
                                     <td>
                                         <div className="flex items-center gap-3">
                                             <div className="avatar">

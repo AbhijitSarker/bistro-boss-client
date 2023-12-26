@@ -74,7 +74,6 @@ const ManageItems = () => {
                     {/* head */}
                     <thead>
                         <tr className="bg-primary text-black text-lg">
-                            <th>#</th>
                             <th>Name</th>
                             <th>Category</th>
                             <th className="text-right">Price</th>
@@ -85,9 +84,7 @@ const ManageItems = () => {
                     <tbody>
                         {
                             currentItems.map((item, index) => <tr key={item._id}>
-                                <th>
-                                    {index + 1}
-                                </th>
+
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">

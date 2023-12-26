@@ -2,6 +2,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, PieChart, Pie, ResponsiveContainer, Legend } from 'recharts';
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 const AdminHome = () => {
     const { user } = useAuth();
     const [axiosSecure] = useAxiosSecure();
@@ -53,7 +54,7 @@ const AdminHome = () => {
 
     return (
         <div className="w-full m-4">
-            <h3>Hi, {user.displayName}Welcome Back To Admin Panel</h3>
+            <SectionTitle heading={'Admin Panel'} subHeading={`Welcome ${user.displayName}`}> </SectionTitle>
 
             <div className="stats shadow">
 
