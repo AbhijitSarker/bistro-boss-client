@@ -59,13 +59,10 @@ const Dashboard = () => {
                             <Link to='/dashboard/allusers'>    <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaUsers /> <p>All Users</p> </div>  </Link>
                         </>
                             : <>
-                                <li><NavLink to='/dashboard/userhome'><FaHome />User Home</NavLink></li>
-                                <li><NavLink to='/dashboard/mycart'><FiShoppingCart /> My Cart <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span></NavLink></li>
-                                <li><NavLink to='/dashboard/reservation'><FaCalendarAlt />Reservation</NavLink></li>
-                                <li><NavLink to='/dashboard/history'><GiWallet />Payment History</NavLink></li>
+
 
                                 <Link to='/dashboard/userhome'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaHome /> <p>User Home</p> </div>  </Link>
-                                <Link to='/dashboard/mycart'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FiShoppingCart /> <p>Admin Home</p> <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span> </div>  </Link>
+                                <Link to='/dashboard/mycart'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FiShoppingCart /> <p>My Orders</p> <span className='bg-purple-400 rounded-lg' > +{cart?.length || 0}</span> </div>  </Link>
                                 <Link to='/dashboard/reservation'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <FaCalendarAlt /> <p>Reservation</p> </div>  </Link>
                                 <Link to='/dashboard/history'>   <div className='flex items-center gap-2 text-2xl mb-4 rounded-md px-2 py-1 hover:bg-gray-800 hover:text-white '> <GiWallet /> <p>Payment History</p> </div>  </Link>
                             </>
