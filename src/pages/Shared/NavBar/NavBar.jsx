@@ -30,14 +30,14 @@ const NavBar = () => {
         <nav className="bg-transparent z-10 relative w-full  h-16 md:h-20 flex justify-center">
             <div className='flex justify-between items-center font-serif container mx-auto'>
                 <div className='flex justify-center items-center font-bold text-primary text-5xl'>
-                    <Link><h1>Res2Ran</h1></Link>
+                    <Link to={'/'}><h1>Res2Ran</h1></Link>
                 </div>
                 {/*for small device */}
                 <ul className={`absolute w-full h-screen flex flex-col gap-10 justify-center items-center bg-[#0C0B08] text-primary transform duration-500 ease-in-out ${open ? 'left-0 top-0' : '-top-[2000px]  left-0'} `}>
                     <Link to='/' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Home</Link>
                     <Link to='/menu' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Menu</Link>
                     <Link to='/order/salad' className='text-3xl font-bold  rounded-md p-1 hover:text-white'>Order Food</Link>
-                    <Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-3xl font-bold  text-primary rounded-md p-1 hover:text-white'>Dashboard</Link>
+                    <Link to={!user ? '/login' : isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-3xl font-bold  text-primary rounded-md p-1 hover:text-white'>Dashboard</Link>
                     {
                         user ?
                             <>
@@ -54,14 +54,14 @@ const NavBar = () => {
                     <Link to='/' className='text-lg font-lg hover:text-primary rounded-md px-1'>Home</Link>
                     <Link to='/menu' className='text-lg font-lg hover:text-primary rounded-md px-1'>Menu</Link>
                     <Link to='/order/salad' className='text-lg font-lg hover:text-primary rounded-md px-1'>Order Food</Link>
-                    <Link to={isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-lg font-lg hover:text-primary rounded-md px-1'>Dashboard</Link>
+                    <Link to={!user ? '/login' : isAdmin ? '/dashboard/adminhome' : '/dashboard/userhome'} className='text-lg font-lg hover:text-primary rounded-md px-1'>Dashboard</Link>
 
                 </ul>
 
                 {
                     user ?
                         <div className='flex'>
-                            <Link className=' md:mr-8' to='/dashboard/mycart'>
+                            <Link className=' md:mr-8' to={!user ? '/login' : '/dashboard/mycart'}>
                                 <div className="relative py-2">
                                     <div className="t-0 absolute left-3">
                                         <p className="flex h-2 w-2 items-center justify-center rounded-full bg-primary p-3 text-sm font-semibold text-black">{cart?.length || 0}</p>
@@ -74,7 +74,7 @@ const NavBar = () => {
                             <button onClick={handleLogout} className="hidden md:flex hover:text-primary hover:underline font-serif w-36 h-12 items-center justify-center rounded-lg font-bold text-xl text-white transition ease-in-out duration-200">Logout</button>
                         </div>
                         : <div className='flex'>
-                            <Link className=' md:mr-8' to='/dashboard/mycart'>
+                            <Link className=' md:mr-8' to={!user ? '/login' : '/dashboard/mycart'}>
                                 <div className="relative py-2">
                                     <div className="t-0 absolute left-3">
                                         <p className="flex h-2 w-2 items-center justify-center rounded-full bg-primary p-3 text-sm font-semibold text-black">{cart?.length || 0}</p>
